@@ -19,6 +19,8 @@ TEXT = r'(?P<text>.+?)'
 COMPLETION_MARK = r'(?P<completed>.)'
 PRIORITY = r'(?P<priority>!{1,3})'
 
+
+
 GENERIC_TASK = re.compile(''.join([
     '^',
     EMPTY_SPACE,
@@ -40,6 +42,23 @@ GENERIC_TASK = re.compile(''.join([
 
 DATETIME_FORMAT = "(%Y-%m-%d %H:%M)"
 DATE_FORMAT = "(%Y-%m-%d)"
+
+MARKDOWN_VIEWPORT = re.compile(
+        '^'                         # Starts at the beginning of the line.
+        '[#]+'
+        '(?P<name>[^#\|]*)'         # Heading beginning.
+        '\|'                        # Name of the viewpoer, all before the | sign.
+        '(?P<filter>[^#\|]*)'       # Colon
+        '('                         # Filter
+           '\|'                     # Colon
+           '(?P<defaults>[^#\|]*)'  # Default attrs
+        ')?'                        
+        '\s*'                       # Any whitespace
+        '(#(?P<source>[A-Z]))?'     # Optional source indicator
+        '\s*'                       # Any whitespace
+        '(\$(?P<sort>[A-Z]))?'      # Optional sort indicator
+        '\s*'                       # Any whitespace 
+        )
 
 GENERIC_VIEWPORT = re.compile(
     '^'                    # Starts at the begging of the line
