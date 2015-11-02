@@ -113,6 +113,21 @@ class TestViewportsTwoContextTaskGeneration(IntegrationTest):
         self.command("w", regex="written$", lines=1)
 
 
+class TestViewportsContextInvalid(IntegrationTest):
+
+    viminput = """
+    === Work tasks | @doesnotexist ===
+    """
+
+    vimoutput = """
+    === Work tasks | @doesnotexist ===
+    """
+
+    def execute(self):
+        self.command("w", regex="Context definition for 'doesnotexist' "
+                                "could not be found.", lines=3)
+
+
 class TestViewportDefaultsAssigment(IntegrationTest):
 
     viminput = """
@@ -382,3 +397,46 @@ class TestViewportsSpecificSortingCombined(TestViewportsSpecificSorting):
     * [ ] home task 2 (2015-08-02 00:00)  #{uuid}
     * [ ] work task 2 (2015-08-02 00:00)  #{uuid}
     """
+
+
+class TestViewportsSortedInvalidOrder(IntegrationTest):
+
+    viminput = """
+    === Work tasks | +work $X ===
+    """
+
+    vimoutput = """
+    === Work tasks | +work $X ===
+    """
+
+    def execute(self):
+        # Check that proper error message is raised
+        self.command("w", regex="Sort indicator 'X' for viewport "
+            "'Work tasks' is not defined, using default.", lines=2)
+
+
+class TestViewportsVisibleMetaTag(IntegrationTest):
+
+    viminput = """
+    === Home tasks | project:Home -VISIBLE ===
+
+    === Chores | project:Home.Chores ===
+    """
+
+    vimoutput = """
+    === Home tasks | project:Home -VISIBLE ===
+    * [ ] home task  #{uuid}
+
+    === Chores | project:Home.Chores ===
+    * [ ] chore task  #{uuid}
+    """
+
+    tasks = [
+        dict(description="home task", project='Home.Random'),
+        dict(description="chore task", project='Home.Chores'),
+    ]
+
+    def execute(self):
+        # Currently, two saves are necessary for VISIBLE to take effect
+        self.command("w", regex="written$", lines=1)
+        self.command("w", regex="written$", lines=1)

@@ -26,10 +26,13 @@ endif
 " Execute the main body of taskwiki source
 execute 'pyfile ' . s:plugin_path . '/taskwiki/taskwiki.py'
 
-" Update to TW upon saving
 augroup taskwiki
     autocmd!
+    " Update to TW upon saving
     execute "autocmd BufWrite *.".expand('%:e')." TaskWikiBufferSave"
+    " Save and load the view to preserve folding
+    execute "autocmd BufWinLeave *.".expand('%:e')." mkview"
+    execute "autocmd BufWinEnter *.".expand('%:e')." silent loadview"
 augroup END
 
 " Global update commands
@@ -70,7 +73,7 @@ command! -range TaskWikiChooseTag :<line1>,<line2>py ChooseSplitTags("global").e
 " Meta commands
 command! TaskWikiInspect :py Meta().inspect_viewport()
 
-" Disable <CR> as VimwikIFollowLink
+" Disable <CR> as VimwikiFollowLink
 if !hasmapto('<Plug>VimwikiFollowLink')
   nmap <Plug>NoVimwikiFollowLink <Plug>VimwikiFollowLink
 endif

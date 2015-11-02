@@ -36,8 +36,8 @@ GENERIC_TASK = re.compile(''.join([
         '(', SOURCE_INDICATOR, ')?',
         '(', UUID, ')?',
     ')?',  # UUID is not there for new tasks
-    FINAL_SEGMENT_SEPARATOR_UNNAMED,
-    #'$'    # Enforce match on the whole line
+    SPACE_UNNAMED,
+    '$'    # Enforce match on the whole line
 ]))
 
 DATETIME_FORMAT = "(%Y-%m-%d %H:%M)"
@@ -63,7 +63,8 @@ MARKDOWN_VIEWPORT = re.compile(
 GENERIC_VIEWPORT = re.compile(
     '^'                    # Starts at the begging of the line
     '[=]+'                 # Heading begging
-    '(?P<name>[^=\|]*)'    # Name of the viewport, all before the | sign
+    '(?P<name>[^=\|\[\{]*)'  # Name of the viewport, all before the | sign
+                             # Cannot include '[', '=', '|, and '{'
     '\|'                   # Colon
     '(?P<filter>[^=\|]*?)'       # Filter
     '('                    # Optional defaults
@@ -77,6 +78,7 @@ GENERIC_VIEWPORT = re.compile(
     '\s*'                  # Any whitespace
     '[=]+'                 # Header ending
     )
+
 
 ANSI_ESCAPE_SEQ = re.compile(
     '\x1b'     # literal ESC

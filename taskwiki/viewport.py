@@ -165,15 +165,15 @@ class ViewPort(object):
     @classmethod
     def from_line(cls, number, cache):
         match = re.search(regexp.GENERIC_VIEWPORT, vim.current.buffer[number])
-       
+
         # If there wasn't a match for the normal vimwiki syntax,
-        # Try checking for Markdown syntax.
-        if not match: 
-            match = re.search(regexp.MARKDOWN_VIEWPORT, 
-                    vim.current.buffer[number])
+        # try checking for Markdown syntax.
+        if not match:
+            match = re.search(regexp.MARKDOWN_VIEWPORT,
+                                vim.current.buffer[number])
 
             # If that didn't match either, then return.
-            if not match: 
+            if not match:
                 return None
 
         filterstring = match.group('filter')
