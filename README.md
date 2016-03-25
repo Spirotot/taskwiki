@@ -6,6 +6,7 @@ Standing on the shoulders of vimwiki and Taskwarrior_
 [![Travis build status](https://travis-ci.org/tbabej/taskwiki.svg?branch=master)](https://travis-ci.org/tbabej/taskwiki)
 [![Coverage Status](https://coveralls.io/repos/tbabej/taskwiki/badge.svg?branch=master)](https://coveralls.io/r/tbabej/taskwiki?branch=master)
 [![Code Health](https://landscape.io/github/tbabej/taskwiki/master/landscape.svg?style=flat)](https://landscape.io/github/tbabej/taskwiki/master)
+[![Chat with developers](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/tbabej/taskwiki)
 
          a         |_   _|_ _ ___| | _\ \      / (_) | _(_)         a         ~
     command-line     | |/ _` / __| |/ /\ \ /\ / /| | |/ / |   personal wiki   ~
@@ -91,7 +92,7 @@ Tasks can be grouped - simply written in one block. This has the advantage
 of any child tasks being marked as dependencies of the parent tasks.
 
     * [ ] Get married
-        * [ ] Find a girlfriend
+        * [X] Find a girlfriend
         * [ ] Buy a ring
         * [ ] Propose
 
